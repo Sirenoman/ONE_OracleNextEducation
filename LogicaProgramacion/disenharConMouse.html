@@ -1,0 +1,84 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var pantalla = document.querySelector('canvas');
+    var pincel = pantalla.getContext('2d');
+    // parte donde defino el arreglo de colores
+    var colores = ['red', 'green', 'blue'];
+    var color = colores[3];
+    // base del canva
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+    // variable para controlar si se puede dibujar o no
+    var puedoDibujar = false;
+    
+    // Funcion para determinar si se puede dibujar en el area
+    function puedeDisenharArea(x,y){
+        if((x >=0 && x < (3*50+5)) && 
+            (y >=0 && y < (50+5))) {
+                return false;
+            } else {
+                return true;
+            }
+    }
+    // Funcion para capturar el evento del mouse
+    function capturaMouse(e){
+        var x = e.pageX - pantalla.offsetLeft;
+        var y = e.pageY - pantalla.offsetTop;
+
+        if(puedeDisenharArea(x,y)){
+            dibujarCirculo(e, color);
+        }
+    }
+    // Funcion para cambiar el color
+    function cambiarColor(e){
+        var x = e.pageX - pantalla.offsetLeft;
+        var y = e.pageY - pantalla.offsetTop;
+
+        if((x >= 0) && (x <= 50) && (y >= 0) && (y <= 50)){
+            color = colores[0];
+        } else if((x >= 50) && (x <= 100) && (y >= 0) && (y <= 50)){
+            color = colores[1];
+        } else if((x >= 100) && (x <= 150) && (y >= 0) && (y <= 50)){
+            color = colores[2];
+        }
+    }
+
+    pantalla.onclick = cambiarColor;
+    // Funcion para dibujar el circulo
+    function dibujarCirculo(evento, color) {
+        var x = evento.pageX - pantalla.offsetLeft;
+        var y = evento.pageY - pantalla.offsetTop;
+        
+        if(puedoDibujar) {
+            pincel.fillStyle = color;
+            pincel.beginPath();
+            pincel.arc(x, y, 5, 0, 2 * 3.14);
+            pincel.fill();
+        }
+
+    }
+
+    pantalla.onmousemove = capturaMouse;
+
+    function habilitarDibujar() {
+        puedoDibujar = true;
+    }
+
+    function deshabilitarDibujar() {
+        puedoDibujar = false;
+    }
+    // Eventos para habilitar y deshabilitar el dibujo
+    pantalla.onmousedown = habilitarDibujar;
+    pantalla.onmouseup = deshabilitarDibujar;
+
+    // Colocando la paleta de colores
+    pincel.fillStyle = colores[0];
+    pincel.fillRect(0, 0, 50, 50);
+    pincel.fillStyle = colores[1];
+    pincel.fillRect(50, 0, 50, 50);
+    pincel.fillStyle = colores[2];
+    pincel.fillRect(100, 0, 50, 50);
+
+
+</script>

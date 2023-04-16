@@ -1,0 +1,36 @@
+<meta charset="UTF-8">
+
+<h1>PROGRAMA JUEGO DE ADIVINACION </h1>
+
+<script>
+
+    function saltarLinea() {
+        document.write("<br>");    
+        document.write("<br>");    
+        document.write("<br>");    
+    }  
+
+    function imprimir(frase) {
+        document.write(frase);
+        saltarLinea();
+    }
+    
+    function loteria(n) {
+        return Math.round(Math.random()*n); 
+    }
+
+    var n = parseInt(prompt("Ingrese un numero maximo para la loteria: "))
+    var numeroPensado = loteria(n);
+    var numeroLanzado = parseInt(prompt("Ingrese un número entre 0-"+n))
+
+    if (numeroPensado == numeroLanzado){
+        imprimir("usted acertó")
+    }
+
+    if(numeroPensado > numeroLanzado) {
+        imprimir("usted erró, el número pensado es mayor: "+numeroPensado);    
+    }else if(numeroPensado < numeroLanzado) {
+        imprimir("usted erró, el número pensado es menor: "+numeroPensado);    
+    }
+
+</script>
